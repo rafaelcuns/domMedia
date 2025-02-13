@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de média</title>
+    <style>
+        body {
+            background-color: #402377;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        div {
+            padding: 2%;
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+        textarea {
+            width: 100%;
+            margin-top: 5%;
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <label for="nota">Nota:</label>
+        <input type="text" name="nota">
+        <button type="submit">Adicionar</button>
+        <br>
+        <textarea name="notas" rows="10" readonly></textarea>
+        <br>
+        <button>Calcular média</button>
+        <p>A média é: </p>
+    </div>
+    <script defer>
+        function adicionarNota() {
+            let nota = notaInput.value
+            if (nota == "") {
+                window.alert("Por favor, insira uma nota")
+            } else {
+                nota = +(parseFloat(nota.replace(",", ".")).toFixed(2))
+                if (isNaN(nota) || (nota < 0 || nota > 10)) {
+                    window.alert("A nota digitada é inválida, por favor, insira uma nota válida.")
+                } else {
+                    notasArea.value += `\rA nota ${indexNota} foi ${nota}`
+                    notas.push(nota)
+                    notaInput.value = ""
+                    indexNota++
+                }
+            }
+        }
+
+        function calcularMedia() {
+            let soma = 0
+            notas.forEach(nota => {
+                console.log(soma, nota)
+                soma += nota
+            })
+            console.log(notas.length)
+            const media = soma / notas.length
+            
+            resultado.innerHTML = "A média é: " + media
+        }
+
+        const notasArea = document.querySelector("textarea")
+        const notaInput = document.querySelector("input[name='nota']")
+        const resultado = document.querySelector("p")
+        let indexNota = 1
+        let notas = []
+        document.querySelector("button").addEventListener("click", adicionarNota)
+        document.querySelectorAll("button")[1].addEventListener("click", calcularMedia)
+    </script>
+</body>
+</html>
